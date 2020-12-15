@@ -142,35 +142,46 @@ Create a function called `getCountryWins` that takes the parameters `data` and `
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-
-    /* code here */
-
+function getCountryWins(data, initials) {
+  const countryGames = data.filter((country) => {
+    return country["Home Team Initials"] === initials ||
+    country["Away Team Initials"] === initials
+  });
+  return countryGames.reduce((wins, game) => {
+    if (game["Home Team Initials"] === initials && 
+        game["Home Team Goals"] > game["Away Team Goals"]) {
+      wins++;
+    } else if (game["Away Team Initials"] === initials && 
+               game["Away Team Goals"] > game["Home Team Goals"]) {
+      wins++
+    }
+    return wins;
+  }, 0);
 }
 
+console.log(getCountryWins(fifaData, "CHN"))
+
+
+// Home Team Initials
 
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
 Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(/* code here */) {
-
-    /* code here */
-
+function getGoals(data) {
+  /* code here */
 }
 
 
 /* 💪💪💪💪💪 Stretch 3: 💪💪💪💪💪
 Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
 
-function badDefense(/* code here */) {
-
-    /* code here */
-
+function badDefense(data) {
+  /* code here */
 }
 
 
-/* If you still have time, use the space below to work on any stretch goals of your chosing as listed in the README file. */
+/* If you still have time, use the space below to work on any stretch goals of your choosing as listed in the README file. */
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
