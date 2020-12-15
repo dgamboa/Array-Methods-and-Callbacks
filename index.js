@@ -215,7 +215,6 @@ function badDefense(data) {
   /* code here */
 }
 
-
 /* If you still have time, use the space below to work on any stretch goals of your choosing as listed in the README file. */
 
 
