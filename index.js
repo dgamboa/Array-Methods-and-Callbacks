@@ -142,11 +142,15 @@ Create a function called `getCountryWins` that takes the parameters `data` and `
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(data, initials) {
-  const countryGames = data.filter((country) => {
+function getCountryGames(data, initials) {
+  return data.filter((country) => {
     return country["Home Team Initials"] === initials ||
     country["Away Team Initials"] === initials
   });
+}
+
+function getCountryWins(data, initials, games) {
+  const countryGames = games(data, initials);
   return countryGames.reduce((wins, game) => {
     if (game["Home Team Initials"] === initials && 
         game["Home Team Goals"] > game["Away Team Goals"]) {
@@ -159,7 +163,7 @@ function getCountryWins(data, initials) {
   }, 0);
 }
 
-console.log(getCountryWins(fifaData, "CHN"))
+console.log(getCountryWins(fifaData, "CHN", getCountryGames)) // Should return 0
 
 
 // Home Team Initials
@@ -168,10 +172,41 @@ console.log(getCountryWins(fifaData, "CHN"))
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
 Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(data) {
-  /* code here */
+function getGoalsByCountry(data) {
+  let countriesList = new Map();
+  
+  data.map((game) => {
+    let initialsHome = game["Home Team Initials"];
+    if (countriesList.get(initialsHome)) {
+      countriesList.set(initialsHome, countriesList.get(initialsHome) + 
+                                      game["Home Team Goals"]);
+    } else {
+      countriesList.set(initialsHome, game["Home Team Goals"]);
+    }
+
+    let initialsAway = game["Away Team Initials"];
+    if (countriesList.get(initialsAway)) {
+      countriesList.set(initialsAway, countriesList.get(initialsAway) + 
+                                      game["Away Team Goals"]);
+    } else {
+      countriesList.set(initialsAway, game["Away Team Goals"]);
+    }
+  })
+
+  return countriesList;
 }
 
+function getGoals(data, gamesCallback, goalsCallback) {
+  let goalsPerGame = new Map();
+  const totalGoalsByCountry = goalsCallback(data);
+  totalGoalsByCountry.forEach((totalGoals, country) => {
+    let totalGamesPlayed = gamesCallback(data, country).length;
+    goalsPerGame.set(country, (totalGoals / totalGamesPlayed).toFixed(2));
+  })
+  return [...goalsPerGame.entries()].reduce((maxTracker, countryGoalsPerGame) => maxTracker[1] > countryGoalsPerGame[1] ? maxTracker : countryGoalsPerGame)
+}
+
+console.log(getGoals(fifaData, getCountryGames, getGoalsByCountry)); // Should return [ 'HUN', '2.72' ]
 
 /* 💪💪💪💪💪 Stretch 3: 💪💪💪💪💪
 Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
