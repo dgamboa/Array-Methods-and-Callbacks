@@ -1,19 +1,55 @@
 import { fifaData } from './fifa.js';
 
+/*
+Sample Object:
+{
+  "Year": 1930,
+  "Datetime": "13 Jul 1930 - 15:00",
+  "Stage": "Group 1",
+  "Stadium": "Pocitos",
+  "City": "Montevideo",
+  "Home Team Name": "France",
+  "Home Team Goals": 4,
+  "Away Team Goals": 1,
+  "Away Team Name": "Mexico",
+  "Win conditions": "",
+  "Attendance": 4444,
+  "Half-time Home Goals": 3,
+  "Half-time Away Goals": 0,
+  "Referee": "LOMBARDI Domingo (URU)",
+  "Assistant 1": "CRISTOPHE Henry (BEL)",
+  "Assistant 2": "REGO Gilberto (BRA)",
+  "RoundID": 201,
+  "MatchID": 1096,
+  "Home Team Initials": "FRA",
+  "Away Team Initials": "MEX"
+}
+*/
+
 // ⚽️ M  V P ⚽️ //
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Practice accessing data by console.log-ing the following pieces of data note, you may want to filter the data first 😉*/
 
 //(a) Home Team name for 2014 world cup final
+const homeTeam = fifaData.filter(game => (game["Year"] === 2014 && game["Stage"] === 'Final'))[0]["Home Team Name"];
+console.log(homeTeam);
 
 //(b) Away Team name for 2014 world cup final
+const awayTeam = fifaData.filter(game => (game["Year"] === 2014 && game["Stage"] === 'Final'))[0]["Away Team Name"];
+console.log(awayTeam);
 
 //(c) Home Team goals for 2014 world cup final
+const homeTeamGoals = fifaData.filter(game => (game["Year"] === 2014 && game["Stage"] === 'Final'))[0]["Home Team Goals"];
+console.log(homeTeamGoals);
 
 //(d) Away Team goals for 2014 world cup final
+const awayTeamGoals = fifaData.filter(game => (game["Year"] === 2014 && game["Stage"] === 'Final'))[0]["Away Team Goals"];
+console.log(awayTeamGoals);
 
 //(e) Winner of 2014 world cup final */
+const winner2014 = () => homeTeamGoals > awayTeamGoals ? homeTeam : awayTeam;
+console.log(winner2014());
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
